@@ -225,14 +225,14 @@ const UploadSong = () => {
       const videoType = type.replace("video/", "");
 
       if (size > 20000000) {
-        setLoadingMemeComplete(false);
+    
         toast.error("File size should be under 20MB", {
           position: toast.POSITION.TOP_RIGHT,
         });
         return false;
       }
       if (videoType !== "mp4" && videoType !== "mkv" && videoType !== "avi") {
-        setLoadingMemeComplete(false);
+       
         toast.error(
           "Invalid File Format. Videos should be in MP4, MKV, or AVI format",
           {
@@ -322,10 +322,10 @@ const UploadSong = () => {
       if (alertText === "Meme uploaded successfully") {
         toast.success(alertText, {
           position: toast.POSITION.TOP_RIGHT,
-        });
-
-        router.push("/");
-
+        });  
+        setVideo({ ...video, memeVideo: "" ,file: ""});
+        setLoadingMemeComplete(false)
+        setValues({ ...values, title: "", Genre: "", description: "", artist: "" });
         // Clean up the timeout when the component unmounts
         
         

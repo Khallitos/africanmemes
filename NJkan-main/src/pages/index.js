@@ -17,9 +17,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Subfooter from "@/components/Subfooter";
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { FilterBox,FormRowSelect } from "@/components";
-
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { FilterBox, FormRowSelect } from "@/components";
 
 const linkStyle = {
   textDecoration: "none",
@@ -40,7 +39,7 @@ const searchDesign = {
   width: {
     xs: "70px",
   },
-  justifyContent:"center"
+  justifyContent: "center",
 };
 
 const sidebar = {
@@ -93,7 +92,7 @@ const Dsgsearch = {
     md: "auto",
     xs: "auto",
   },
-  marginTop:"20px"
+  marginTop: "20px",
 };
 
 const DsgsearchText = {
@@ -124,6 +123,8 @@ export default function home() {
     Genre,
     Filter,
     DefaultGenre,
+    getAllMemes,
+    allMemes,
   } = useAppContext();
 
   const [search, setSearch] = useState("");
@@ -142,7 +143,9 @@ export default function home() {
   const getSongs = () => {
     getAllSongs();
   };
-
+  const getMemes = () => {
+    getAllMemes();
+  };
   const handleKeypress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -150,21 +153,10 @@ export default function home() {
     }
   };
 
-  const getRandomSongs = () => {
-    getAllRandomSongs();
-  };
-  const getTrendingSongs = () => {
-    getAllTrendingSongs();
-  };
-
   useEffect(() => {
     getSongs();
+    getMemes();
   }, [page]);
-
-  useEffect(() => {
-    getTrendingSongs();
-    getRandomSongs();
-  }, []);
 
   useEffect(() => {
     if (search.length < 1) {
@@ -187,15 +179,11 @@ export default function home() {
   return (
     <>
       <Box sx={{ display: "flex" }}>
-        
         <Box sx={pageDesign}>
           {/* <Typography variant="h6" color="initial" sx={DsgsearchText}>
           {" "}
           Find a song..
         </Typography> */}
-        
-      
-        
 
           <Paper component="form" sx={Dsgsearch}>
             <InputBase
@@ -219,30 +207,43 @@ export default function home() {
             </IconButton>
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           </Paper>
-        <Box sx={{display:"flex" , marginBottom:"20px" , justifyContent:"center !important" , backgroundColor:"#332e2e",borderRadius:"5px", height:"60px", padding:"20px"}}>
-          <FormRowSelect
-            labelText="Category"
-            sx={{ width: "40px", backgroundColor:"white", marginLeft:"20px" }}
-            // id="outlined-required"
-            name="Genre"
-            value={values.Genre}
-            handleChange={handleChange}
-            list={Genre}
-            defaultValue={"Afrobeats"}
-          />
-          
+          <Box
+            sx={{
+              display: "flex",
+              marginBottom: "20px",
+              justifyContent: "center !important",
+              backgroundColor: "#332e2e",
+              borderRadius: "5px",
+              height: "60px",
+              padding: "20px",
+            }}
+          >
+            <FormRowSelect
+              labelText="Category"
+              sx={{
+                width: "40px",
+                backgroundColor: "white",
+                marginLeft: "20px",
+              }}
+              // id="outlined-required"
+              name="Genre"
+              value={values.Genre}
+              handleChange={handleChange}
+              list={Genre}
+              defaultValue={"Afrobeats"}
+            />
+
             <FilterBox
-            labelText="Filter"
-            sx={{ width: "40px" }}
-            id="outlined-required"
-            name="Filter"
-            value={values.Filter}
-            handleChange={handleChange}
-            list={Filter}
-            defaultValue={"Filter"}
-          />
-          
-</Box>
+              labelText="Filter"
+              sx={{ width: "40px" }}
+              id="outlined-required"
+              name="Filter"
+              value={values.Filter}
+              handleChange={handleChange}
+              list={Filter}
+              defaultValue={"Filter"}
+            />
+          </Box>
           <Box>
             {!totalSongs && (
               <Typography
@@ -254,19 +255,17 @@ export default function home() {
               </Typography>
             )}
 
-            {AllSongs.map((song) => (
+            {allMemes.map((meme) => (
               <Link
-                href={"/download/" + song._id}
+                href={"/download/" + meme._id}
                 style={linkStyle}
-                key={song._id}
+                key={meme._id}
               >
                 <Cards
-                  key={song._id}
-                  title={song.title}
-                  artist={song.artist}
-                  Genre={song.Genre}
-                  description={song.description}
-                  ImageKey={song.Key}
+                  key={meme._id}
+                  title={meme.title}
+                  Genre={meme.Genre}
+                  VideoKey={meme.Key}
                 />
               </Link>
             ))}

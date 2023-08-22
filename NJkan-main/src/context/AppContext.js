@@ -49,6 +49,7 @@ import {
   SET_LOADER,
   UNSET_USERNAME,
   SET_INITIALSTATE,
+  GET_ALL_MEMES
 } from "./actions";
 
 //https://kanmusic.onrender.com
@@ -67,6 +68,7 @@ const initialState = {
   DefaultGenre: "Afrobeat",
   songDetails: [],
   AllSongs: [],
+  allMemes:[],
   TrendingSongs: [],
   singleSongDetails: [],
   RandomSongs: [],
@@ -271,7 +273,6 @@ export const AppProvider = ({ children }) => {
   // uploadMemeVideo
 
   const uploadVideo = async ({ formData }) => {
-
     try {
       const { data } = await axios.post(
         `http://localhost:6060/api/v1/upload/uploadmeme`,
@@ -283,10 +284,9 @@ export const AppProvider = ({ children }) => {
 
       const success = { data };
       if (success) {
-        dispatch({ type: UPLOAD_MEME_SUCCESS});
+        dispatch({ type: UPLOAD_MEME_SUCCESS });
       }
-    } 
-    catch (error) {
+    } catch (error) {
       dispatch({
         type: UPLOAD_MEME_ERROR,
         payload: { error: error.response.data.msg },
@@ -391,6 +391,25 @@ export const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {}
+  };
+
+  //GET ALL MEMES
+
+  const getAllMemes = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:6060/api/v1/getmemes/allmemes`
+      );
+      const {allMemes} = data
+        dispatch({
+          type: GET_ALL_MEMES,
+          payload:{
+            allMemes: allMemes,
+          }
+        })
+    } catch (error) {
+      console.log("Invalid Request")
+    }
   };
 
   // GET ALL UNVERIFIED SONGS FOR ADMIN
@@ -502,9 +521,7 @@ export const AppProvider = ({ children }) => {
         `/api/v1/upload/downloadcounter?id=${id}`,
         userDetails
       );
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   // get admin dashboard
@@ -560,9 +577,10 @@ export const AppProvider = ({ children }) => {
   const getMusicLinks = async (filename, songid) => {
     try {
       const userDetails = { filename, songid };
-      console.log(userDetails)
+      console.log(userDetails);
       const data = await axios.post(
-        `http://localhost:6000/api/v1/upload/getSignUrl`,userDetails
+        `http://localhost:6000/api/v1/upload/getSignUrl`,
+        userDetails
       );
     } catch (error) {}
   };
@@ -601,6 +619,7 @@ export const AppProvider = ({ children }) => {
         getAllRandomSongs,
         setLocalStorage,
         getMusicLinks,
+        getAllMemes,
       }}
     >
       {children}

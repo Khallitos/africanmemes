@@ -50,6 +50,8 @@ export const UNSET_USERNAME = "UNSET_USERNAME"
 export const IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN"
 export const  IS_USER_LOGGED_OUT= " IS_USER_LOGGED_OUT"
 export const  SET_INITIALSTATE= " SET_INITIALSTATE"
+export const  GET_ALL_MEMES= " GET_ALL_MEMES"
+
 
 
 

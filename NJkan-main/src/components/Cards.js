@@ -24,7 +24,7 @@ const cardDesign = {
     xs: "90%",
   },
   marginX: {
-    xs: "auto"
+    xs: "auto",
   },
 
   img: {
@@ -42,8 +42,41 @@ const cardDesign = {
     textDecoration: "none",
   },
 };
+const instagramReelsContainerStyles = {
+  position: 'relative',
+  width: '100px', // Set a fixed width for all videos
+  height: '100px', // Set a fixed height for all videos
+  borderRadius: '8px',
+  overflow: 'hidden',
+};
 
-const Cards = ({ title, artist, Genre, description, songId, ImageKey }) => {
+const videoStyles = {
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
+};
+
+const overlayStyles = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: 'rgba(0, 0, 0, 0.5)',
+  opacity: 0,
+  transition: 'opacity 0.3s ease',
+};
+
+const playButtonStyles = {
+  color: 'white',
+  fontSize: '24px',
+};
+
+const Cards = ({ title, Genre, VideoKey }) => {
   const {
     getAllSongs,
     AllSongs,
@@ -80,28 +113,33 @@ const Cards = ({ title, artist, Genre, description, songId, ImageKey }) => {
   };
   return (
     <Box sx={cardDesign}>
-      <img
-        src={`https://kanmusic.s3.eu-west-2.amazonaws.com/${ImageKey}`}
-        alt=""
-        sx={{width:"60px", height:"60px"}}
-      />
+         <div sx={instagramReelsContainerStyles}>
+      <video sx={videoStyles} controls>
+        <source
+          src={`https://kanmusic.s3.eu-west-2.amazonaws.com/${VideoKey}`}
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>
+      <div sx={overlayStyles}>
+        <span sx={playButtonStyles}>▶️</span>
+      </div>
+    </div>
       <Box>
         <Typography
           gutterBottom
           variant="p"
           component="div"
-          sx={{ marginLeft: "4px", color: "white" ,fontSize:"16px"}}
+          sx={{ marginLeft: "4px", color: "white", fontSize: "16px" }}
         >
-          {artist} - {title}
+          {title}
         </Typography>
         <Typography
           gutterBottom
           variant="p"
           component="div"
-          sx={{ marginLeft: "4px", color: "white", fontSize:"13px" }}
-        >
-          Duration 3:12
-        </Typography>
+          sx={{ marginLeft: "4px", color: "white", fontSize: "13px" }}
+        ></Typography>
         <Typography variant="body2" color="text.secondary"></Typography>
       </Box>
       {/* <CardActions>

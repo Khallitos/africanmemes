@@ -41,6 +41,8 @@ import {
   IS_USER_LOGGED_IN,
   IS_USER_LOGGED_OUT,
   UPLOAD_MEME_SUCCESS,
+  UPLOAD_MUSIC_ERROR,
+  GET_ALL_MEMES,
   SET_INITIALSTATE } from "./actions";
 
   
@@ -57,6 +59,16 @@ import {
       }
     }
   }
+
+//Get all memes videos 
+
+  if (action.type === GET_ALL_MEMES) {
+    return {
+      ...state, 
+      allMemes: action.payload.allMemes,
+
+  }
+}
   
     if (action.type === UPLOAD_MEME_ERROR) {
       return {
