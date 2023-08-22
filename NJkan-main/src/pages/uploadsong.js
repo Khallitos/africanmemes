@@ -30,6 +30,7 @@ import {
   Subfooter,
   FilterBox,
 } from "../components";
+import { useRouter } from "next/router";
 
 const pageDesign = {
   marginTop: "60px",
@@ -141,7 +142,7 @@ const UploadSong = () => {
   const [values, setValues] = useState(initialState);
   const [loadingMeme, setLoadingMeme] = useState(false);
   const [loadingMemeComplete, setLoadingMemeComplete] = useState(false);
-
+  const router = useRouter();
   const [video, setVideo] = useState({
     file: "",
     memeVideo: "",
@@ -208,12 +209,9 @@ const UploadSong = () => {
   const handleVideoUpload = async (e) => {
     setLoadingMeme(true);
     if (!e.target.files || e.target.files.length === 0) {
-      toast.error(
-        "Please upload a meme file",
-        {
-          position: toast.POSITION.TOP_RIGHT,
-        }
-      );
+      toast.error("Please upload a meme file", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       setLoadingMeme(false);
       return;
     }
@@ -267,6 +265,11 @@ const UploadSong = () => {
 
   const UploadMeme = async (e) => {
     e.preventDefault();
+    if (!video.file) {
+      toast.error("Please upload meme", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
     const MemeDetails = {
       title: values.title,
       Genre: values.Genre,
@@ -277,6 +280,7 @@ const UploadSong = () => {
         MemeDetails,
         { abortEarly: false }
       );
+
       if (checkValidations) {
         let formData = new FormData();
         formData.append("file", video.file);
@@ -319,13 +323,19 @@ const UploadSong = () => {
         toast.success(alertText, {
           position: toast.POSITION.TOP_RIGHT,
         });
+
+        router.push("/");
+
+        // Clean up the timeout when the component unmounts
+        
+        
       } else {
         toast.error(alertText, {
           position: toast.POSITION.TOP_RIGHT,
         });
       }
     }
-  }, [showAlert,alertText]);
+  }, [showAlert, alertText]);
 
   return (
     <>

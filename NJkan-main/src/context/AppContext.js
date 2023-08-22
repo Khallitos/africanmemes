@@ -285,7 +285,8 @@ export const AppProvider = ({ children }) => {
       if (success) {
         dispatch({ type: UPLOAD_MEME_SUCCESS});
       }
-    } catch (error) {
+    } 
+    catch (error) {
       dispatch({
         type: UPLOAD_MEME_ERROR,
         payload: { error: error.response.data.msg },
