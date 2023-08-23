@@ -155,7 +155,7 @@ const Navbar = () => {
           </Link>
         </Box>
 
-        <Box sx={linkDesign}>
+        {/* <Box sx={linkDesign}>
           {links.map((link) => (
             <Link
               href={link.path}
@@ -176,7 +176,7 @@ const Navbar = () => {
               </Button>
             </Link>
           ))}
-        </Box>
+        </Box> */}
 
         {token && (
           <Box>

@@ -13,27 +13,19 @@ import DirectionsIcon from "@mui/icons-material/Directions";
 import { useAppContext } from "../context/AppContext";
 import PageBtn from "../components/PageBtn";
 import { Box, Button, Modal, Typography } from "@mui/material";
+import { Margin } from "@mui/icons-material";
 
 const cardDesign = {
   minHeight: "4rem",
   display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  padding: "5px",
-  backgroundColor: "#332e2e",
-
-  marginX: {
-    xs: "auto",
-  },
-
-  marginBottom: "20px",
-
+  marginBottom: "5px",
   p: {
     fontWeight: "bold",
     textDecoration: "none",
   },
-
+ 
 };
+
 
 const Cards = ({ title, Genre, VideoKey }) => {
   const {
@@ -79,6 +71,7 @@ const Cards = ({ title, Genre, VideoKey }) => {
             type="video/mp4"
           />
         </video>
+        
         <Box>
           <Typography
             gutterBottom

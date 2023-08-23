@@ -19,7 +19,8 @@ import { useRouter } from "next/router";
 import Subfooter from "@/components/Subfooter";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { FilterBox, FormRowSelect } from "@/components";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import ReactPlayer from 'react-player/lazy'
+
 
 const DefaultGenre = "Afrobeats";
 const initialState = {
@@ -38,41 +39,25 @@ const searchDesign = {
   justifyContent: "center",
 };
 
-const sidebar = {
-  marginTop: "300px",
-  backgroundColor: "#332E2E",
-  padding: "10px",
-  marginLeft: {
-    xl: "100px",
-    lg: "50px",
-    md: "100px",
-  },
-  // display:{
-  //   sm:"none",
-  //   xs:"none",
-  // }
-  "@media (max-width: 900px)": {
-    display: "none",
-  },
-  "@media (max-width: 1000px)": {
-    display: "none",
-  },
-  width: "300px",
-};
+
 const pageDesign = {
   marginTop: "60px",
   marginX: {
-    lg: "auto",
-    md: "auto",
-    xl: 40,
-    sm: 2,
+    lg: "100px",
+    md:"10px",
+    xl: "10px",
+    sm: "10px",
   },
   width: {
     xl: "100%",
-    xs: "640px",
+    md: "100%",
+    lg: "100%",
+    sm: "100%",
+    xs: "100%",
   },
   bottom: "0",
-  backgroundColor: "red",
+ justifyContent:"center"
+ 
 };
 const Dsgsearch = {
   p: "2px 4px",
@@ -148,7 +133,8 @@ export default function home() {
   };
   const linkStyle = {
     textDecoration: "none",
-    backgroundColor: "#3c3939",
+    width:"100px"
+    
   };
 
   useEffect(() => {
@@ -175,7 +161,7 @@ export default function home() {
 
   return (
     <>
-      <Box sx={{ display: "flex" }}>
+      <Box >
         <Box sx={pageDesign}>
           {/* <Typography variant="h6" color="initial" sx={DsgsearchText}>
           {" "}
@@ -245,8 +231,11 @@ export default function home() {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))",
-              gridGap: "3rem",
+              gridTemplateColumns: "repeat(auto-fit, calc(20rem - 50px))",
+              gridGap: "0rem",   
+              gridColumnGap: "5px",
+              
+             
             }}
           >
             {allMemes.map((meme) => (
