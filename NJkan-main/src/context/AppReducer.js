@@ -66,6 +66,7 @@ import {
     return {
       ...state, 
       allMemes: action.payload.allMemes,
+      isloading: false,
 
   }
 }

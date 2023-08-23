@@ -19,11 +19,7 @@ import { useRouter } from "next/router";
 import Subfooter from "@/components/Subfooter";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { FilterBox, FormRowSelect } from "@/components";
-
-const linkStyle = {
-  textDecoration: "none",
-  backgroundColor: "#3c3939",
-};
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
 const DefaultGenre = "Afrobeats";
 const initialState = {
@@ -72,10 +68,11 @@ const pageDesign = {
     sm: 2,
   },
   width: {
-    xl: "600px",
+    xl: "100%",
     xs: "640px",
   },
   bottom: "0",
+  backgroundColor: "red",
 };
 const Dsgsearch = {
   p: "2px 4px",
@@ -140,9 +137,6 @@ export default function home() {
     setIsSuggestions(true);
   };
 
-  const getSongs = () => {
-    getAllSongs();
-  };
   const getMemes = () => {
     getAllMemes();
   };
@@ -152,17 +146,20 @@ export default function home() {
       Search();
     }
   };
+  const linkStyle = {
+    textDecoration: "none",
+    backgroundColor: "#3c3939",
+  };
 
   useEffect(() => {
-    getSongs();
     getMemes();
   }, [page]);
 
-  useEffect(() => {
-    if (search.length < 1) {
-      getSongs();
-    }
-  }, [search.length]);
+  // useEffect(() => {
+  //   if (search.length < 1) {
+  //     getSongs();
+  //   }
+  // }, [search.length]);
 
   if (isloading)
     return (
@@ -244,17 +241,14 @@ export default function home() {
               defaultValue={"Filter"}
             />
           </Box>
-          <Box>
-            {!totalSongs && (
-              <Typography
-                variant="h5"
-                color="initial"
-                sx={{ marginBottom: "20px" }}
-              >
-                No results found
-              </Typography>
-            )}
 
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(20rem, 1fr))",
+              gridGap: "3rem",
+            }}
+          >
             {allMemes.map((meme) => (
               <Link
                 href={"/download/" + meme._id}
@@ -272,62 +266,7 @@ export default function home() {
           </Box>
 
           <PageBtn />
-
-          {/* Random songs */}
-          {isSuggestions && (
-            <Box sx={{ marginTop: "100px" }}>
-              <Typography
-                variant="h5"
-                color="initial"
-                sx={{ marginBottom: "10px" }}
-              >
-                YOU MAY ALSO LIKE <Divider light />
-              </Typography>
-
-              <Box sx={{ marginBottom: "10px" }}>
-                {RandomSongs.map((song) => (
-                  <Link href={"/download/" + song._id} style={linkStyle}>
-                    <div>
-                      <TrendCards
-                        key={song._id}
-                        title={song.title}
-                        artist={song.artist}
-                        Genre={song.Genre}
-                        description={song.description}
-                        ImageKey={song.Key}
-                      />
-                    </div>
-                  </Link>
-                ))}
-              </Box>
-            </Box>
-          )}
         </Box>
-        {/* <Box sx={sidebar}>
-          <Typography
-            variant="h5"
-            color="white"
-            sx={{ marginBottom: "20px", marginTop: "20px", fontWeight: "bold" }}
-          >
-            TRENDING SONGS
-          </Typography>
-          <Box>
-            {TrendingSongs.map((song) => (
-              <Link href={"/download/" + song._id} style={linkStyle}>
-                <Box>
-                  <TrendCards
-                    key={song._id}
-                    title={song.title}
-                    artist={song.artist}
-                    Genre={song.Genre}
-                    description={song.description}
-                    ImageKey={song.Key}
-                  />
-                </Box>
-              </Link>
-            ))}
-          </Box>
-        </Box> */}
       </Box>
       <Subfooter />
     </>
