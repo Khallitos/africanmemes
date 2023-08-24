@@ -19,8 +19,6 @@ import { useRouter } from "next/router";
 import Subfooter from "@/components/Subfooter";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { FilterBox, FormRowSelect } from "@/components";
-import ReactPlayer from 'react-player/lazy'
-
 
 const DefaultGenre = "Afrobeats";
 const initialState = {
@@ -39,25 +37,17 @@ const searchDesign = {
   justifyContent: "center",
 };
 
-
 const pageDesign = {
-  marginTop: "60px",
+  marginTop: "30px",
   marginX: {
     lg: "100px",
-    md:"10px",
+    md: "10px",
     xl: "10px",
     sm: "10px",
   },
-  width: {
-    xl: "100%",
-    md: "100%",
-    lg: "100%",
-    sm: "100%",
-    xs: "100%",
-  },
-  bottom: "0",
- justifyContent:"center"
- 
+ml:1,
+padding:"20px",
+
 };
 const Dsgsearch = {
   p: "2px 4px",
@@ -133,8 +123,7 @@ export default function home() {
   };
   const linkStyle = {
     textDecoration: "none",
-    width:"100px"
-    
+    width: "100px",
   };
 
   useEffect(() => {
@@ -161,35 +150,36 @@ export default function home() {
 
   return (
     <>
-      <Box >
+      <Box>
         <Box sx={pageDesign}>
           {/* <Typography variant="h6" color="initial" sx={DsgsearchText}>
           {" "}
           Find a song..
         </Typography> */}
-
-          <Paper component="form" sx={Dsgsearch}>
-            <InputBase
-              sx={searchDesign}
-              placeholder="Search......"
-              inputProps={{ "aria-label": "Search for a song" }}
-              name="search"
-              value={search}
-              autoFocus
-              // onKeyDown= {Search}
-              onKeyPress={handleKeypress}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <IconButton
-              type="button"
-              sx={{ p: "10px" }}
-              aria-label="search"
-              onClick={Search}
-            >
-              <SearchIcon />
-            </IconButton>
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          </Paper>
+          <Box>
+            <Paper component="form" sx={Dsgsearch}>
+              <InputBase
+                sx={searchDesign}
+                placeholder="Search......"
+                inputProps={{ "aria-label": "Search for a song" }}
+                name="search"
+                value={search}
+                autoFocus
+                // onKeyDown= {Search}
+                onKeyPress={handleKeypress}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <IconButton
+                type="button"
+                sx={{ p: "10px" }}
+                aria-label="search"
+                onClick={Search}
+              >
+                <SearchIcon />
+              </IconButton>
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            </Paper>
+          </Box>
           <Box
             sx={{
               display: "flex",
@@ -231,10 +221,16 @@ export default function home() {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, calc(20rem - 50px))",
-              gridGap: "0rem",   
-              gridColumnGap: "5px",
-              
+              gridTemplateColumns: "repeat(auto-fit, calc(20rem - 55px))",
+              gridGap: "0rem",
+              gridColumnGap: "20px",
+              marginX:{
+                xl:"80px",
+                lg:"20px",
+                md:"80px",
+                sm:"50px",
+                xs:"20px"
+              },
              
             }}
           >

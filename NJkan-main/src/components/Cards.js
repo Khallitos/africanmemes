@@ -14,15 +14,19 @@ import { useAppContext } from "../context/AppContext";
 import PageBtn from "../components/PageBtn";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { Margin } from "@mui/icons-material";
+import ReactPlayer from "react-player";
 
 const cardDesign = {
-  minHeight: "4rem",
-  display: "flex",
+
   marginBottom: "5px",
   p: {
     fontWeight: "bold",
     textDecoration: "none",
   },
+  width: "300px",
+  alignItems:"center",
+  justifyContent:"center"
+
  
 };
 
@@ -65,12 +69,18 @@ const Cards = ({ title, Genre, VideoKey }) => {
   return (
     <Box sx={cardDesign}>
       <Box>
-        <video controls width="300px" height="200px">
+        {/* <video controls width="300px" height="200px">
           <source
             src={`https://kanmusic.s3.eu-west-2.amazonaws.com/${VideoKey}`}
             type="video/mp4"
           />
-        </video>
+        </video> */}
+        <ReactPlayer
+         url ={`https://kanmusic.s3.eu-west-2.amazonaws.com/${VideoKey}`} 
+        
+          width="300px" 
+          height="200px"
+        />
         
         <Box>
           <Typography
