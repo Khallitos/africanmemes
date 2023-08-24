@@ -147,6 +147,7 @@ const UploadSong = () => {
     file: "",
     memeVideo: "",
     message: "",
+    posterImage:"",
     success: false,
   });
 
@@ -218,6 +219,20 @@ const UploadSong = () => {
 
     let reader = new FileReader();
     let file = e.target.files[0];
+    const posterCanvas = document.createElement("canvas");
+  const posterContext = posterCanvas.getContext("2d");
+  const video = document.createElement("video");
+  video.preload = "metadata";
+  video.src = URL.createObjectURL(file);
+
+  video.onloadedmetadata = () => {
+    posterCanvas.width = 300;
+    posterCanvas.height = 200;
+    posterContext.drawImage(video, 0, 0, posterCanvas.width, posterCanvas.height);
+
+    const posterImage = posterCanvas.toDataURL("image/jpeg"); // Convert to data URL
+
+
 
     const FileValidations = () => {
       const size = file.size;
@@ -251,6 +266,7 @@ const UploadSong = () => {
           file: file,
           memeVideo: URL.createObjectURL(file),
           message: "",
+          posterImage: posterImage,
         });
         setLoadingMemeComplete(true); // Set loadingMemeComplete to true here
         setLoadingMeme(false);
@@ -261,7 +277,7 @@ const UploadSong = () => {
       setLoadingMemeComplete(false); // Set loadingMemeComplete to false here
       setLoadingMeme(false);
     }
-  };
+  };}
 
   const UploadMeme = async (e) => {
     e.preventDefault();

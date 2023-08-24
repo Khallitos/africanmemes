@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef  } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -46,6 +46,8 @@ const Cards = ({ title, Genre, VideoKey }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [posterUrl, setPosterUrl] = useState(null);
+  const videoRef = useRef(null);
 
   const [openApprovals, setOpenApprovals] = React.useState(false);
   const ApprovalPromptOpen = () => setOpenApprovals(true);
@@ -66,39 +68,68 @@ const Cards = ({ title, Genre, VideoKey }) => {
     approveThisSong(id);
     ApprovalPromptClose();
   };
+
+  
+  const handleVideoReady = (player) => {
+    // Get the internal player instance
+    const videoElement = player.getInternalPlayer();
+    
+    const captureTime = videoElement.duration / 2;
+    videoElement.currentTime = captureTime;
+
+    videoElement.addEventListener("seeked", function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = videoElement.videoWidth;
+      canvas.height = videoElement.videoHeight;
+      const ctx = canvas.getContext("2d");
+
+      ctx.drawImage(
+        videoElement,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      
+      setPosterUrl(canvas.toDataURL());
+    });
+  };
   return (
     <Box sx={cardDesign}>
-      <Box>
-        {/* <video controls width="300px" height="200px">
-          <source
-            src={`https://kanmusic.s3.eu-west-2.amazonaws.com/${VideoKey}`}
-            type="video/mp4"
-          />
-        </video> */}
-        <ReactPlayer
-         url ={`https://kanmusic.s3.eu-west-2.amazonaws.com/${VideoKey}`} 
-        
-          width="300px" 
-          height="200px"
-        />
-        
-        <Box>
-          <Typography
-            gutterBottom
-            variant="p"
-            component="div"
-            sx={{ marginLeft: "4px", color: "white", fontSize: "20px" ,fontWeight:"20px" }}
-          >
-            {title}
-          </Typography>
-        </Box>
-      </Box>
+   <div>
+      <ReactPlayer
+        url={`https://kanmusic.s3.eu-west-2.amazonaws.com/${VideoKey}`}
+        width="300px"
+        height="200px"
+        controls
+        onReady={handleVideoReady}
+      />
 
-      {/* <CardActions>
-      <Button size="small">Share</Button>
-      <Button size="small">like</Button>
-    </CardActions> */}
-      {/* Review song */}
+      <div
+        style={{
+          width: "300px",
+          height: "200px",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        {posterUrl && (
+          <img
+            src={posterUrl}
+            alt="Video Poster"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        )}
+      </div>
+
+      <div>
+        <p>{title}</p>
+      </div>
+    </div>
     </Box>
   );
 };
